@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+			<meta charset="utf=8">
+		    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<title> University of Minnesota | Office for Public Engagement | Map </title>
+			<script src="http://d3js.org/d3.v3.min.js"></script>
+			<link rel="stylesheet" type="text/css" href="css/style.css">
+		<style type="text/css"></style>
+	</head>
+
+	<body>
+		<div id="container">
+		 	<div id="header">
+		 		<h1>University of Minnesota | Office for Public Engagement</h1>
+		 	</div>
+		 	<div id="mapDiv">
+
+				<script type="text/javascript">
+
+					//Width and height
+					var w = 350;
+					var h = 400;
+
+					//You can choose a different projection, but we like Albers.
+					var projection = d3.geo.albers()
+										.translate([40, 675])
+										.scale([3600]);
+
+					// var projection = d3.geo.mercator()
+					// 	    .center([-97, 37])
+					// 	    .scale(2300)
+					// 	    .translate([40, 675]);
+
+					//Define default path generator
+					var path = d3.geo.path()
+					 			.projection(projection);
+
+					//Create SVG element
+					var svg = d3.select("#mapDiv")
+								.append("svg")
+								.attr("width", w)
+								.attr("height", h);
+
+					// Load in county descriptions
+					d3.csv("mapExamples.csv", function(data) {
+		
+						// Load in GeoJson data within the csv callback
+						d3.json("mnCountiesGeo.json", function(json){
+							
+							//Merge GeoJson and MapExamples.csv data: 
+							//loop through csv once for each county name and grab the project data
+							for (var i = 0; i < data.length; i++) {
+
+								var dataCounty = data[i].County;
+								var dataProjectName = data[i].projectName;
+								var dataProjectUrl = data[i].projectUrl;
+								var dataProjectDescription = data[i].projectDescription;
+
+								// then loop through the GeoJson file to match data via county name and append the csv data to the GeoJson file
+								for (var j = 0; j < json.features.length; j++) {
+
+									var jsonCounty = json.features[j].properties.name;
+
+									if (dataCounty == jsonCounty) {
+										json.features[j].properties.proj_title = dataProjectName;
+										json.features[j].properties.proj_url = dataProjectUrl;
+										json.features[j].properties.proj_descript = dataProjectDescription;
+										break;
+									}
+								}
+							}
+
+							//Bind data and create one path per GeoJSON feature
+							svg.selectAll("path")
+								.data(json.features)
+								.enter()
+								.append("path")
+								.attr("d", path)
+							 	.style("fill", "#dbd6bf")
+							   	.style("stroke", "#f9f7f6")
+							  	.style("stroke-width", "1.3")
+							  	// Add interaction
+							   	.on("click", function(d){
+							   		var uri = d.properties.name;
+							   		var res = encodeURI(uri);
+
+							   		d3.select("#infoDiv")
+							   			// infoDiv formatting
+							   			.html("<h2>" + d.properties.proj_title + "</h2> <h5>" + d.properties.name + " County </h5><img src=./img/" + res + ".jpg><p>" + d.properties.proj_descript + "</p> <p>For more information, visit <a href=" + d.properties.proj_url + ">" + d.properties.proj_url + "</a></p>");
+							   		console.log(uri);
+							   		console.log(res);
+							   	})
+
+								.on("mouseover", function(){
+								   	d3.select(this)
+								   		.style("fill-opacity", ".6")
+							  	})
+							   	.on("mouseout", function(){
+								   	d3.select(this)
+								   		.style("fill-opacity", "1")
+							  	})
+							 	.append("title")
+							 	.text(function(d){
+							   		return d.properties.name;
+							});
+					 	});
+					});
+				</script>
+			</div>
+	    	<div id="infoDiv">Select a county.</div> 
+		</div>
+	</body>
+</html>

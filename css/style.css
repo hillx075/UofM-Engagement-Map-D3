@@ -1,0 +1,106 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #eae7df;
+    font-family: "Open Sans", Georgia, Times New Roman, serif;
+    font-size: 16px;
+    line-height: 1.5em
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'HelveticaNeueW01-75Bold', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    color: #4c261c;
+    letter-spacing: 0.025em;
+    line-height: 1.2em;
+    font-weight: 400;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+h2 {
+    font-size: 24px;
+    background-color: #a4ab87;
+/*    display: inline-block*/
+}
+
+h4 {
+    margin: 0.375em 0 0 -13px;
+    font-size: 1.125rem;
+    font-family: "Titillium Web","Lucida Sans",Helvetica,Arial,sans-serif;
+    font-weight: 100;
+    background: url(http://www.engagement.umn.edu/sites/default/themes/ope_omega/images/bg-orange-header.png);
+    padding: 5px 10px 5px 20px;
+    color: #4c261c
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: -5px;
+}
+
+a {
+    color: #7a0019;
+    text-decoration: none
+}
+
+a:hover {
+    color: #e8941a;
+    text-decoration: underline
+}
+
+p {
+    font-size: 100%;
+    line-height: 1.5em;
+    color: #676767;
+    padding-left: 10px
+}
+
+#header {
+    margin-top: -10;
+    background: #ccc;
+}
+
+#container {
+    margin: 1em;
+}
+
+#mapDiv {
+    position: absolute;
+    width: 22em;
+    left: 0px;
+    background-color: #eae7df;
+}
+
+#infoDiv {    
+    margin-left: 24em;
+    background-color: #eae7df;
+    overflow: auto;
+    text-align: left;
+}
+
+img {
+    width: 40%;
+    box-shadow: 3px 3px 1px #888888;
+    border-radius: 3px;
+    margin-left: 10px
+}
+
+@media (max-width: 640px) {
+ 
+    img {
+        display: none;
+    }
+
+    h3 {
+        display: none;
+    }
+
+    h1 {
+        display: none;
+
+}
+
+@media (min-width: 1280px) {
+	
+}
