@@ -82,16 +82,15 @@
 							  	.style("stroke-width", "1.3")
 							  	// Add interaction
 							   	.on("click", function(d){
+							   		
+							   		//format for image pull
 							   		var uri = d.properties.name;
 							   		var res = encodeURI(uri);
 
 							   		d3.select("#infoDiv")
 							   			// infoDiv formatting
 							   			.html("<h2>" + d.properties.proj_title + "</h2> <h5>" + d.properties.name + " County </h5><img src=./img/" + res + ".jpg><p>" + d.properties.proj_descript + "</p> <p>For more information, visit <a href=" + d.properties.proj_url + ">" + d.properties.proj_url + "</a></p>");
-							   		console.log(uri);
-							   		console.log(res);
 							   	})
-
 								.on("mouseover", function(){
 								   	d3.select(this)
 								   		.style("fill-opacity", ".6")
